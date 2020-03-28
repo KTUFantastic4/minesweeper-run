@@ -10,12 +10,16 @@ public class MovementController : MonoBehaviour
     private Vector2 movementInput;
 
     private Vector3 direction;
+    public Tilemap tilemap;
 
     public Tilemap fogOfWar;
+
+
 
     bool hasMoved;
     void Update()
     {
+
         if (movementInput.x == 0)
         {
             hasMoved = false;
@@ -45,8 +49,14 @@ public class MovementController : MonoBehaviour
             {
                 direction = new Vector3(-1, 0, 0);
             }
-            transform.position += direction;
-            UpdateFogOfWar();
+
+            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null)
+            {
+
+                transform.position += direction;
+                UpdateFogOfWar();
+            }
+
         }
         else if (movementInput.x > 0)
         {
@@ -63,8 +73,13 @@ public class MovementController : MonoBehaviour
                 direction = new Vector3(1, 0, 0);
             }
 
-            transform.position += direction;
-            UpdateFogOfWar();
+            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null)
+            {
+
+                transform.position += direction;
+                UpdateFogOfWar();
+            }
+
         }
     }
 
