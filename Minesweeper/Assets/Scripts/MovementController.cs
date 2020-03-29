@@ -10,9 +10,12 @@ public class MovementController : MonoBehaviour
     private Vector2 movementInput;
 
     private Vector3 direction;
+
     public Tilemap tilemap;
 
     public Tilemap fogOfWar;
+
+    public Tilemap bombs;
 
 
 
@@ -80,6 +83,11 @@ public class MovementController : MonoBehaviour
                 UpdateFogOfWar();
             }
 
+        }
+        if (bombs.GetTile(bombs.WorldToCell(transform.position)) != null)
+        {
+            Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
+            Debug.Log("BOOOOM!");
         }
     }
 
