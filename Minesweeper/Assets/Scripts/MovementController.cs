@@ -11,6 +11,7 @@ public class MovementController : MonoBehaviour
 
     private Vector3 direction;
 
+    public Tile water;
     public Tilemap tilemap;
 
     public Tilemap fogOfWar;
@@ -53,7 +54,7 @@ public class MovementController : MonoBehaviour
                 direction = new Vector3(-1, 0, 0);
             }
 
-            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null)
+            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water)
             {
 
                 transform.position += direction;
@@ -76,7 +77,7 @@ public class MovementController : MonoBehaviour
                 direction = new Vector3(1, 0, 0);
             }
 
-            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null)
+            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water)
             {
 
                 transform.position += direction;
