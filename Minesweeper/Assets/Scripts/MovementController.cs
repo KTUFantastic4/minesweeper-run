@@ -10,13 +10,16 @@ public class MovementController : MonoBehaviour
     private Vector2 movementInput;
 
     private Vector3 direction;
+
+    public Tile water;
     public Tilemap tilemap;
-
     public Tilemap fogOfWar;
-
-
+    public Tilemap bombs;
+    public Tilemap numbers;
+    public Tile[] numbers_tile;
 
     bool hasMoved;
+
     void Update()
     {
 
@@ -49,13 +52,15 @@ public class MovementController : MonoBehaviour
             {
                 direction = new Vector3(-1, 0, 0);
             }
-
-            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null)
+            //Check if trying to go on restricted tile
+            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water)
             {
 
                 transform.position += direction;
                 UpdateFogOfWar();
             }
+            CheckIfSteppedOnBomb();
+            UpdateNumbers();
 
         }
         else if (movementInput.x > 0)
@@ -72,15 +77,17 @@ public class MovementController : MonoBehaviour
             {
                 direction = new Vector3(1, 0, 0);
             }
-
-            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null)
+            //Check if trying to go on restricted tile
+            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water)
             {
 
                 transform.position += direction;
                 UpdateFogOfWar();
             }
-
+            CheckIfSteppedOnBomb();
+            UpdateNumbers();
         }
+
     }
 
     public void OnMove(InputValue value)
@@ -93,21 +100,94 @@ public class MovementController : MonoBehaviour
         transform.position -= direction;
     }
 
+    private void CheckIfSteppedOnBomb()
+    {
+        if (bombs.GetTile(bombs.WorldToCell(transform.position)) != null)
+        {
+            //Show mines
+            bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y+1000);
+            
+            //Print to console
+            Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
+            Debug.Log("BOOOOM!");
+        }
+    }
+
+    //Set numbers to tiles
+    private void UpdateNumbers()
+    {
+        Vector3Int currentPlayerTile = bombs.WorldToCell(transform.position);
+
+        int bombsNumber = GetNumberOfBombs(currentPlayerTile);
+        if (bombsNumber > 0)
+            numbers.SetTile(currentPlayerTile, numbers_tile[bombsNumber - 1]);
+    }
+
+
     public int vision = 1;
 
-    void UpdateFogOfWar()
+    /*   void UpdateFogOfWar()
+       {
+           Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+
+           //Clear the surrounding tiles
+           for (int x = -vision; x <= vision; x++)
+           {
+               for (int y = -vision; y <= vision; y++)
+               {
+                   fogOfWar.SetTile(currentPlayerTile + new Vector3Int(x, y, 0), null);
+               }
+
+           }
+
+       }*/
+    private void UpdateFogOfWar()
     {
         Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
-
-        //Clear the surrounding tiles
-        for (int x = -vision; x <= vision; x++)
+        fogOfWar.SetTile(currentPlayerTile, null);
+        if (currentPlayerTile.y % 2 == 0)
         {
-            for (int y = -vision; y <= vision; y++)
-            {
-                fogOfWar.SetTile(currentPlayerTile + new Vector3Int(x, y, 0), null);
-            }
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 - 1, 0 - 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0, 0 - 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 + 1, 0, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0, 0 + 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 - 1, 0 + 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 - 1, 0, 0), null);
+        }
+        else
+        {
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0, 0 - 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 + 1, 0 - 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 + 1, 0, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 + 1, 0 + 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 , 0 + 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 - 1, 0, 0), null);
 
         }
 
+    }
+
+    private int GetNumberOfBombs(Vector3Int currentPlayerTile)
+    {
+        int bombsNumber = 0;
+        if (currentPlayerTile.y % 2 == 0)
+        {
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 - 1, 0 - 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0, 0 - 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 + 1, 0, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0, 0 + 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 - 1, 0 + 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 - 1, 0, 0)) != null) bombsNumber++;
+        }
+        else
+        {
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0, 0 - 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 + 1, 0 - 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 + 1, 0, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 + 1, 0 + 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0, 0 + 1, 0)) != null) bombsNumber++;
+            if (bombs.GetTile(currentPlayerTile + new Vector3Int(0 - 1, 0, 0)) != null) bombsNumber++;
+        }
+        return bombsNumber;
     }
 }
