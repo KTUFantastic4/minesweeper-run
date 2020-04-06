@@ -105,7 +105,7 @@ public class MovementController : MonoBehaviour
         if (bombs.GetTile(bombs.WorldToCell(transform.position)) != null)
         {
             //Show mines
-            bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y+1000);
+            bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
             
             //Print to console
             Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
