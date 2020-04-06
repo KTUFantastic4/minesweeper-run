@@ -42,11 +42,11 @@ public class MovementController : MonoBehaviour
         {
             if (movementInput.y > 0)
             {
-                direction = new Vector3(-0.5f, 0.5f);
+                direction = new Vector3(-0.5f, 0.4885f);
             }
             else if (movementInput.y < 0)
             {
-                direction = new Vector3(-0.5f, -0.5f);
+                direction = new Vector3(-0.5f, -0.4885f);
             }
             else
             {
