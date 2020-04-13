@@ -54,7 +54,7 @@ public class MovementController : MonoBehaviour
             }
             //Check if trying to go on restricted tile
             if (up.GetTile(up.WorldToCell(transform.position + direction)) == tower ||
-                (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && 
+                (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null &&
                 tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water &&
                 up.GetTile(up.WorldToCell(transform.position + direction)) == null))
             {
@@ -82,7 +82,7 @@ public class MovementController : MonoBehaviour
             }
             //Check if trying to go on restricted tile
             if (up.GetTile(up.WorldToCell(transform.position + direction)) == tower ||
-                (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && 
+                (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null &&
                 tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water &&
                 up.GetTile(up.WorldToCell(transform.position + direction)) == null))
             {
@@ -109,7 +109,7 @@ public class MovementController : MonoBehaviour
     //Check if player reached finish
     private void CheckIfWin()
     {
-        if(up.GetTile(up.WorldToCell(transform.position)) == tower)
+        if (up.GetTile(up.WorldToCell(transform.position)) == tower)
         {
             //Print to console
             Debug.Log("Winner winner chicked dinner!");
@@ -122,7 +122,7 @@ public class MovementController : MonoBehaviour
         {
             //Show mines
             bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
-            
+
             //Print to console
             Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
             Debug.Log("BOOOOM!");
@@ -134,7 +134,7 @@ public class MovementController : MonoBehaviour
         Vector3Int currentPlayerTile = bombs.WorldToCell(transform.position);
 
         int bombsNumber = GetNumberOfBombs(currentPlayerTile);
-        if (bombsNumber > 0 && bombs.GetTile(bombs.WorldToCell(transform.position))==null)
+        if (bombsNumber > 0 && bombs.GetTile(bombs.WorldToCell(transform.position)) == null)
             numbers.SetTile(currentPlayerTile, numbers_tile[bombsNumber - 1]);
     }
 
@@ -144,7 +144,6 @@ public class MovementController : MonoBehaviour
     /*   void UpdateFogOfWar()
        {
            Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
-
            //Clear the surrounding tiles
            for (int x = -vision; x <= vision; x++)
            {
@@ -152,9 +151,7 @@ public class MovementController : MonoBehaviour
                {
                    fogOfWar.SetTile(currentPlayerTile + new Vector3Int(x, y, 0), null);
                }
-
            }
-
        }*/
     private void UpdateFogOfWar()
     {
@@ -175,7 +172,7 @@ public class MovementController : MonoBehaviour
             fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 + 1, 0 - 1, 0), null);
             fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 + 1, 0, 0), null);
             fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 + 1, 0 + 1, 0), null);
-            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 , 0 + 1, 0), null);
+            fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0, 0 + 1, 0), null);
             fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 - 1, 0, 0), null);
 
         }
