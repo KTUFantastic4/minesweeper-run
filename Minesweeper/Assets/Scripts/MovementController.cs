@@ -8,7 +8,6 @@ public class MovementController : MonoBehaviour
 {
     //Stores input from the PlayerInput
     private Vector2 movementInput;
-
     private Vector3 direction;
 
     public Tile water;
@@ -135,7 +134,7 @@ public class MovementController : MonoBehaviour
         Vector3Int currentPlayerTile = bombs.WorldToCell(transform.position);
 
         int bombsNumber = GetNumberOfBombs(currentPlayerTile);
-        if (bombsNumber > 0)
+        if (bombsNumber > 0 && bombs.GetTile(bombs.WorldToCell(transform.position))==null)
             numbers.SetTile(currentPlayerTile, numbers_tile[bombsNumber - 1]);
     }
 
