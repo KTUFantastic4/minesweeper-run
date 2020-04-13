@@ -12,7 +12,9 @@ public class MovementController : MonoBehaviour
     private Vector3 direction;
 
     public Tile water;
+    public Tile tower;
     public Tilemap tilemap;
+    public Tilemap up;
     public Tilemap fogOfWar;
     public Tilemap bombs;
     public Tilemap numbers;
@@ -35,7 +37,6 @@ public class MovementController : MonoBehaviour
         }
 
     }
-
     public void GetMovementDirection()
     {
         if (movementInput.x < 0)
@@ -53,9 +54,12 @@ public class MovementController : MonoBehaviour
                 direction = new Vector3(-1, 0, 0);
             }
             //Check if trying to go on restricted tile
-            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water)
+            if (up.GetTile(up.WorldToCell(transform.position + direction)) == tower ||
+                (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && 
+                tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water &&
+                up.GetTile(up.WorldToCell(transform.position + direction)) == null))
             {
-
+                Debug.Log("Move");
                 transform.position += direction;
                 UpdateFogOfWar();
             }
@@ -78,12 +82,16 @@ public class MovementController : MonoBehaviour
                 direction = new Vector3(1, 0, 0);
             }
             //Check if trying to go on restricted tile
-            if (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water)
+            if (up.GetTile(up.WorldToCell(transform.position + direction)) == tower ||
+                (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null && 
+                tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water &&
+                up.GetTile(up.WorldToCell(transform.position + direction)) == null))
             {
-
+                Debug.Log("Move");
                 transform.position += direction;
                 UpdateFogOfWar();
             }
+            CheckIfWin();
             CheckIfSteppedOnBomb();
             UpdateNumbers();
         }
@@ -99,7 +107,16 @@ public class MovementController : MonoBehaviour
     {
         transform.position -= direction;
     }
-
+    //Check if player reached finish
+    private void CheckIfWin()
+    {
+        if(up.GetTile(up.WorldToCell(transform.position)) == tower)
+        {
+            //Print to console
+            Debug.Log("Winner winner chicked dinner!");
+        }
+    }
+    //Check if player steped on mine
     private void CheckIfSteppedOnBomb()
     {
         if (bombs.GetTile(bombs.WorldToCell(transform.position)) != null)
@@ -112,7 +129,6 @@ public class MovementController : MonoBehaviour
             Debug.Log("BOOOOM!");
         }
     }
-
     //Set numbers to tiles
     private void UpdateNumbers()
     {
