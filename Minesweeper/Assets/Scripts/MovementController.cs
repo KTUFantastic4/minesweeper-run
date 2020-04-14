@@ -179,7 +179,7 @@ public class MovementController : MonoBehaviour
 
     }
 
-    private int GetNumberOfBombs(Vector3Int currentPlayerTile)
+    public int GetNumberOfBombs(Vector3Int currentPlayerTile)
     {
         int bombsNumber = 0;
         if (currentPlayerTile.y % 2 == 0)
