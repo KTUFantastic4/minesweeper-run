@@ -14,7 +14,7 @@ public class BasicCameraFollow : MonoBehaviour
     private float targetZoom;
     private float zoomFactor = 3f;
     [SerializeField] private float zoomLerpSpeed = 10;
-    private Vector3 zoomed = new Vector3(5f, -3f, -10f);
+    private Vector3 zoomed = new Vector3(4.3f, -3f, -10f);
 
     void Start()
 	{
@@ -34,20 +34,20 @@ public class BasicCameraFollow : MonoBehaviour
         {
             isZoomed = !isZoomed;
         }
-        
-        targetZoom -= scrollData * zoomFactor;
-        targetZoom = Mathf.Clamp(targetZoom, 2.5f, 8f);
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
 
         if (followTarget != null && !isZoomed)
 		{
-			targetPos = new Vector3(followTarget.position.x, followTarget.position.y, transform.position.z);
+            targetZoom -= scrollData * zoomFactor;
+            targetZoom = Mathf.Clamp(targetZoom, 2.5f, 8f);
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, targetZoom, Time.deltaTime * zoomLerpSpeed);
+
+            targetPos = new Vector3(followTarget.position.x, followTarget.position.y, transform.position.z);
 			Vector3 velocity = (targetPos - transform.position) * moveSpeed;
 			transform.position = Vector3.SmoothDamp (transform.position, targetPos, ref velocity, 1.0f, Time.deltaTime);
         }
         else
         {
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 12f, Time.deltaTime * zoomLerpSpeed);
+            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 10f, Time.deltaTime * zoomLerpSpeed);
             cam.transform.position = zoomed;// Vector3.SmoothDamp(cam.transform.position, zoomed, ref zoomed, 1.0f, Time.deltaTime*zoomLerpSpeed);            
         }
 	}
