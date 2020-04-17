@@ -14290,6 +14290,13 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 79f4e8a75c0f01e49a9242170358718a, type: 3}
     volume: 1
     pitch: 1.09
+    loop: 0
+    source: {fileID: 0}
+  - name: DancingCoffin
+    clip: {fileID: 8300000, guid: d907506612e976f48b6386aa9ec10bfb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
     source: {fileID: 0}
 --- !u!4 &1537229494
 Transform:

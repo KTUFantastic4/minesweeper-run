@@ -36,7 +36,10 @@ public class GameOverMeniu : MonoBehaviour
     void Show()
     {
         if (gameIsOver)
-            FindObjectOfType<AudioManager>().Play("Explotion");
+        {
+            //FindObjectOfType<AudioManager>().Play("Explotion");
+            FindObjectOfType<AudioManager>().Play("DancingCoffin");
+        }
         gameOverMenuUI.SetActive(true);
         
         player.isDead = true;
