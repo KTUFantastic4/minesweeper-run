@@ -133,7 +133,7 @@ public class MovementController : MonoBehaviour
             //Print to console         
             
             isDead = true;
-            
+            //FindObjectOfType<AudioManager>().Play("Explotion");
             Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
             Debug.Log("BOOOOM!");
             
