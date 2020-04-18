@@ -20,6 +20,7 @@ public class MovementController : MonoBehaviour
     public Tile[] numbers_tile;
 
     public bool isDead = false;
+    public bool isWon = false;
 
     bool hasMoved;
 
@@ -96,10 +97,11 @@ public class MovementController : MonoBehaviour
                 transform.position += direction;
                 UpdateFogOfWar();
             }
-            CheckIfWin();
+            
             CheckIfSteppedOnBomb();
             UpdateNumbers();
         }
+        CheckIfWin();
 
     }
 
@@ -120,6 +122,7 @@ public class MovementController : MonoBehaviour
         {
             //Print to console
             Debug.Log("Winner winner chicked dinner!");
+            isWon = true;
         }
     }
     //Check if player steped on mine
