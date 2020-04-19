@@ -26,7 +26,19 @@ public class WinScreen : MonoBehaviour
         winScreen.SetActive(true);
         FindObjectOfType<AudioManager>().Play("TF2Victory");
         enabled = false;
+        FindObjectOfType<GameOverMeniu>().enabled = false;
         
+        StartCoroutine(StopMovementAfterTime(6));
+        
+    }
+    IEnumerator StopMovementAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        FindObjectOfType<MovementController>().CancelInvoke();
+        FindObjectOfType<MovementController>().enabled = false;
+        
+        //winScreen.SetActive(false);
     }
     public void NextLevel()
     {
