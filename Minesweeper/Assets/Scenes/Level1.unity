@@ -15501,11 +15501,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2207075689628887980, guid: bd23f624c95218546a657b51e717ab28,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2207075689628887981, guid: bd23f624c95218546a657b51e717ab28,
         type: 3}
       propertyPath: m_Name
       value: Sun
       objectReference: {fileID: 0}
+    - target: {fileID: 2207075689628887982, guid: bd23f624c95218546a657b51e717ab28,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207075689628887983, guid: bd23f624c95218546a657b51e717ab28,
+        type: 3}
+      propertyPath: itemButton
+      value: 
+      objectReference: {fileID: 5071813454579484509, guid: f1d685f9d9d09aa48a3b0c96b626651f,
+        type: 3}
     - target: {fileID: 2207075689628887985, guid: bd23f624c95218546a657b51e717ab28,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15575,6 +15591,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food
       objectReference: {fileID: 0}
+    - target: {fileID: 3559883565068601121, guid: d4a32ec94939229499d9afd9c828cbd4,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3559883565068601124, guid: d4a32ec94939229499d9afd9c828cbd4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -15629,6 +15650,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3559883565068601126, guid: d4a32ec94939229499d9afd9c828cbd4,
+        type: 3}
+      propertyPath: itemButton
+      value: 
+      objectReference: {fileID: 2883343251683658474, guid: a479b4cdaeecbaf41b0504570f47ffe2,
+        type: 3}
+    - target: {fileID: 3559883565068601127, guid: d4a32ec94939229499d9afd9c828cbd4,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4a32ec94939229499d9afd9c828cbd4, type: 3}
@@ -15694,10 +15726,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6068429680088249840, guid: dccccf1ba23f637438ad6192161ddd3b,
+        type: 3}
+      propertyPath: itemButton
+      value: 
+      objectReference: {fileID: 3788168619812596522, guid: 22454df9aca21254c8a16f505e7a2938,
+        type: 3}
+    - target: {fileID: 6068429680088249841, guid: dccccf1ba23f637438ad6192161ddd3b,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6068429680088249842, guid: dccccf1ba23f637438ad6192161ddd3b,
         type: 3}
       propertyPath: m_Name
       value: Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 6068429680088249843, guid: dccccf1ba23f637438ad6192161ddd3b,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dccccf1ba23f637438ad6192161ddd3b, type: 3}
