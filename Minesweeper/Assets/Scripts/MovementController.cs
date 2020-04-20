@@ -20,6 +20,7 @@ public class MovementController : MonoBehaviour
     public Tile[] numbers_tile;
 
     public bool isDead = false;
+    public bool isWon = false;
 
     bool hasMoved;
 
@@ -96,10 +97,11 @@ public class MovementController : MonoBehaviour
                 transform.position += direction;
                 UpdateFogOfWar();
             }
-            CheckIfWin();
+            
             CheckIfSteppedOnBomb();
             UpdateNumbers();
         }
+        CheckIfWin();
 
     }
 
@@ -120,6 +122,11 @@ public class MovementController : MonoBehaviour
         {
             //Print to console
             Debug.Log("Winner winner chicked dinner!");
+            //Show mines
+            bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
+            isWon = true;
+            
+            
         }
     }
     //Check if player steped on mine
@@ -130,12 +137,15 @@ public class MovementController : MonoBehaviour
             //Show mines
             bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
 
-            //Print to console         
-            
-            isDead = true;
-            
-            Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
-            Debug.Log("BOOOOM!");
+            //Check if not won  
+            if(!isWon)
+            {
+                isDead = true;
+                
+                //Print to console  
+                Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
+                Debug.Log("BOOOOM!");
+            }
             
         }
     }

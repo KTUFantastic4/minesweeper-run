@@ -15,11 +15,14 @@ public class GameOverMeniu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
        
-            
+     
+
             if (player.isDead)
             {
                 Show();
+                
             }
 
         if(gameIsOver)
@@ -27,10 +30,16 @@ public class GameOverMeniu : MonoBehaviour
             gameOverMenuUI.SetActive(false);
         }
         
+
     }
     
     void Show()
     {
+        if (gameIsOver)
+        {
+            //FindObjectOfType<AudioManager>().Play("Explotion");
+            FindObjectOfType<AudioManager>().Play("DancingCoffin");
+        }
         gameOverMenuUI.SetActive(true);
         
         player.isDead = true;
@@ -40,18 +49,25 @@ public class GameOverMeniu : MonoBehaviour
         
         
     }
-    public void RestartGame()
+    //RestartGame
+    public void MainMenu()
     {
-        Debug.Log("Restarting...");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //Debug.Log("Restarting...");
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
         
+        //gameOverMenuUI.SetActive(false);
+        //meniuIsOff = false;
+        //Time.timeScale = 1f;
+        //player.isDead = false;
+        
+        
+        //gameIsOver = true;
+        gameIsOver = true;
+        Debug.Log("Loading Main Menu...");
+        SceneManager.LoadScene("Menu");
         gameOverMenuUI.SetActive(false);
-        meniuIsOff = false;
-        Time.timeScale = 1f;
         player.isDead = false;
-        
-        
         gameIsOver = true;
 
     }
@@ -61,12 +77,23 @@ public class GameOverMeniu : MonoBehaviour
         Application.Quit();
         
     }
-    public void MainMenu()
+    public void RestartGame()
     {
-        Debug.Log("Loading Main Menu...");
-        SceneManager.LoadScene("Menu");
+        Debug.Log("Restarting...");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+
         gameOverMenuUI.SetActive(false);
+        meniuIsOff = false;
+        Time.timeScale = 1f;
         player.isDead = false;
+
+
         gameIsOver = true;
+        //Debug.Log("Loading Main Menu...");
+        //SceneManager.LoadScene("Menu");
+        //gameOverMenuUI.SetActive(false);
+        //player.isDead = false;
+        //gameIsOver = true;
     }
 }
