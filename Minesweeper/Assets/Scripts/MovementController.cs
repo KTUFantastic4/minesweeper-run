@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-
-public class MovementController : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class MovementController : MonoBehaviour, IMovementController
 {
     //Stores input from the PlayerInput
     private Vector2 movementInput;
@@ -18,16 +18,32 @@ public class MovementController : MonoBehaviour
     public Tilemap bombs;
     public Tilemap numbers;
     public Tile[] numbers_tile;
+    private Rigidbody2D rigidbody2D;
+    private BombDetection bombDetection;
 
     public bool isDead = false;
     public bool isWon = false;
 
     bool hasMoved;
 
+    private void Awake()
+    {
+        bombDetection = new BombDetection();
+    }
+
+    private void Start()
+    {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D.transform.position = new Vector3(-8, -8.6f, 0);
+    }
+
     void Update()
     {
-
-        if(!isDead)
+        Debug.Log("Player cords: "+ GetComponent<Rigidbody2D>().transform.position);
+        //For testing only
+        //transform.position = new Vector3Int(-5, -16, 0);
+        //rigidbody2D.MovePosition();
+        if (!isDead)
         {
             if (movementInput.x == 0)
             {
@@ -36,11 +52,22 @@ public class MovementController : MonoBehaviour
             else if (movementInput.x != 0 && !hasMoved)
             {
                 hasMoved = true;
+                Debug.Log("Player input detected");
 
                 GetMovementDirection();
             }
         }
 
+    }
+
+    public Tilemap GetBombsTilemap()
+    {
+        return bombs;
+    }
+
+    public Vector3Int GetCurrentPosition()
+    {
+        return bombs.WorldToCell(transform.position);
     }
 
     public void GetMovementDirection()
@@ -108,11 +135,13 @@ public class MovementController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         movementInput = value.Get<Vector2>();
+        Debug.Log("On move value: " + movementInput);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         transform.position -= direction;
+        Debug.Log("Collision");
     }
 
     //Check if player reached finish
@@ -130,9 +159,12 @@ public class MovementController : MonoBehaviour
         }
     }
     //Check if player steped on mine
-    private void CheckIfSteppedOnBomb()
+    private bool CheckIfSteppedOnBomb()
     {
-        if (bombs.GetTile(bombs.WorldToCell(transform.position)) != null && !isDead)
+        Vector3Int currentPlayerTile = bombs.WorldToCell(transform.position);
+
+        //if (bombs.GetTile(currentPlayerTile) != null && !isDead)
+        if (bombDetection.HandlePlayerInteractionWithBombs(bombs, currentPlayerTile) && !isDead)
         {
             //Show mines
             bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
@@ -144,10 +176,11 @@ public class MovementController : MonoBehaviour
                 
                 //Print to console  
                 Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
-                Debug.Log("BOOOOM!");
-            }
-            
+                Debug.Log("BOOOOM!"+currentPlayerTile);
+                return true;
+            }            
         }
+        return false;
     }
 
     //Set numbers to tiles
