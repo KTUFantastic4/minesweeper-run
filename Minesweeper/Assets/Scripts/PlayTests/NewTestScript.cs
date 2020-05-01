@@ -83,7 +83,7 @@ namespace Tests
             Assert.AreEqual(spawn, newPosition);
         }
         //SITA GALI LIESTI
-        /*[UnityTest]
+        [UnityTest]
         public IEnumerator GameOverWhenSteppedOnBomb()
         {
             SceneManager.LoadScene(1);
@@ -94,9 +94,10 @@ namespace Tests
             player.GetComponent<MovementController>().transform.position = bombPos;
             yield return new WaitForSeconds(1f);
             bool isDead = player.GetComponent<MovementController>().isDead;
+            var bombs = player.GetComponent<MovementController>().bombs;
 
             Assert.AreEqual(true, isDead);
-        }*/
+        }
         //NELIESTI!!!
         /*[UnityTest]
          public IEnumerator GameOverWhenSteppedOnBomb()
