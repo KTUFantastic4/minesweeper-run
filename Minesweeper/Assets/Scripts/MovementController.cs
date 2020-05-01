@@ -18,6 +18,8 @@ public class MovementController : MonoBehaviour, IMovementController
     public Tilemap bombs;
     public Tilemap numbers;
     public Tile[] numbers_tile;
+
+    private Player player;
     private Rigidbody2D rigidbody2D;
     private BombDetection bombDetection;
 
@@ -28,6 +30,7 @@ public class MovementController : MonoBehaviour, IMovementController
 
     private void Awake()
     {
+        player = new Player();
         bombDetection = new BombDetection();
     }
 
@@ -173,7 +176,14 @@ public class MovementController : MonoBehaviour, IMovementController
             if(!isWon)
             {
                 isDead = true;
+
+                //var inventoryBag = GameObject.FindGameObjectWithTag("Player").GetComponent<Bag>;
+                //inventoryBag.
+                //var bag = GameObject.FindGameObjectWithTag("Bag").gameObject;
+                //bag.SetActive(false);
                 
+                
+
                 //Print to console  
                 Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
                 Debug.Log("BOOOOM!"+currentPlayerTile);
