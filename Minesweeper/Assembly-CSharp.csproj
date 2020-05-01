@@ -62,10 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AudioManager.cs" />
-    <Compile Include="Assets\GameOverMeniu.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Bag.cs" />
     <Compile Include="Assets\Scripts\BasicCameraFollow.cs" />
+    <Compile Include="Assets\Scripts\GameOverMeniu.cs" />
     <Compile Include="Assets\Scripts\HideTilemapColliderOnPlay.cs" />
     <Compile Include="Assets\Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="Assets\Scripts\Slot.cs" />
     <Compile Include="Assets\Scripts\Sound.cs" />
     <Compile Include="Assets\Scripts\Spawn.cs" />
-    <Compile Include="Assets\WinScreen.cs" />
+    <Compile Include="Assets\Scripts\WinScreen.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />

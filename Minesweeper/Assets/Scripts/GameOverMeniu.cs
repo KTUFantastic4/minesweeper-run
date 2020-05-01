@@ -41,10 +41,18 @@ public class GameOverMeniu : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("DancingCoffin");
         }
         gameOverMenuUI.SetActive(true);
+        //Bag [] bybiai = FindObjectsOfType<Bag>();
+        //foreach(Bag bybys in bybiai)
+        //{
+        //    bybys.gameObject.SetActive(false);
+        //    bybys.isClosed = true;
+        //}
         
+        FindObjectOfType<Bag>().isClosed = false;
+        FindObjectOfType<Bag>().gameObject.SetActive(false);
         player.isDead = true;
         
-        player.CancelInvoke();
+        //player.CancelInvoke();
         gameIsOver = false;
         
         
