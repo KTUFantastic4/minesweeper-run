@@ -82,6 +82,16 @@ namespace Tests
 
             Assert.AreEqual(spawn, newPosition);
         }
+
+        [UnityTest]
+        public IEnumerator TilemapBombsLoaded()
+        {
+            SceneManager.LoadScene(1);
+            yield return new WaitForSeconds(0.1f);
+            var player = GameObject.Find("Player");
+            Assert.NotNull(player.GetComponent<MovementController>().bombs);
+        }
+
         //SITA GALI LIESTI
         [UnityTest]
         public IEnumerator GameOverWhenSteppedOnBomb()
@@ -95,6 +105,7 @@ namespace Tests
             yield return new WaitForSeconds(1f);
             bool isDead = player.GetComponent<MovementController>().isDead;
             var bombs = player.GetComponent<MovementController>().bombs;
+            //player.GetComponent<MovementController>().bombs.WorldToCell;
 
             Assert.AreEqual(true, isDead);
         }

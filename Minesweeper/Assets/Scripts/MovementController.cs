@@ -19,6 +19,9 @@ public class MovementController : MonoBehaviour, IMovementController
     public Tilemap numbers;
     public Tile[] numbers_tile;
 
+    private SpriteRenderer spriteRenderer;
+    public Sprite sprite;
+
     private Player player;
     private Rigidbody2D rigidbody2D;
     private BombDetection bombDetection;
@@ -27,6 +30,7 @@ public class MovementController : MonoBehaviour, IMovementController
     public bool isWon = false;
 
     bool hasMoved;
+    public int vision = 1;
 
     private void Awake()
     {
@@ -45,7 +49,9 @@ public class MovementController : MonoBehaviour, IMovementController
     {
         //For testing
         CheckIfSteppedOnBomb();
-        CheckIfWin();
+        //CheckIfWin();
+        //sprite.
+        this.GetComponent<SpriteRenderer>().sprite = sprite;
 
         Debug.Log("Player cords: "+ GetComponent<Rigidbody2D>().transform.position);
         //For testing only
@@ -170,7 +176,7 @@ public class MovementController : MonoBehaviour, IMovementController
     //Check if player steped on mine
     private bool CheckIfSteppedOnBomb()
     {
-        Vector3Int currentPlayerTile = bombs.WorldToCell(transform.position);
+        Vector3Int currentPlayerTile = bombs.WorldToCell(rigidbody2D.transform.position);
 
         //if (bombs.GetTile(currentPlayerTile) != null && !isDead)
         if (bombDetection.HandlePlayerInteractionWithBombs(bombs, currentPlayerTile) && !isDead)
@@ -202,25 +208,7 @@ public class MovementController : MonoBehaviour, IMovementController
         if (bombsNumber > 0)
             numbers.SetTile(currentPlayerTile, numbers_tile[bombsNumber - 1]);
     }
-
-
-    public int vision = 1;
-
-    /*   void UpdateFogOfWar()
-       {
-           Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
-
-           //Clear the surrounding tiles
-           for (int x = -vision; x <= vision; x++)
-           {
-               for (int y = -vision; y <= vision; y++)
-               {
-                   fogOfWar.SetTile(currentPlayerTile + new Vector3Int(x, y, 0), null);
-               }
-
-           }
-
-       }*/
+    
     private void UpdateFogOfWar()
     {
         Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
