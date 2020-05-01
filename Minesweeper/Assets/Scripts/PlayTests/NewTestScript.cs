@@ -98,7 +98,7 @@ namespace Tests
             Assert.AreEqual(true, isDead);
         }*/
         //NELIESTI!!!
-        [UnityTest]
+        /*[UnityTest]
          public IEnumerator GameOverWhenSteppedOnBomb()
          {
              SceneManager.LoadScene(1);
@@ -126,7 +126,7 @@ namespace Tests
             bool hasWon = player.GetComponent<MovementController>().isWon;
 
             Assert.AreEqual(true, hasWon);
-        }
+        }*/
         //(-7,-8.6,0) item
         //(-6.5,-8.1,0) bomb
         //(14,3.1,0) win
