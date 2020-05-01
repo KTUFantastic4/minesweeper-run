@@ -5,18 +5,18 @@ using UnityEngine;
 public class Bag : MonoBehaviour
 {
     public bool isClosed = false;
-    public GameObject bagObject;
+    public GameObject bag;
 
     public void OpenCloseBag()
     {
         if (isClosed == true)
         {
-            bagObject.SetActive(true);
+            bag.SetActive(true);
             isClosed = false;
         }
         else
         {
-            bagObject.SetActive(false);
+            bag.SetActive(false);
             isClosed = true;
         }
     }

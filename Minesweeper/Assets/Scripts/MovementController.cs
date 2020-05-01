@@ -38,10 +38,15 @@ public class MovementController : MonoBehaviour, IMovementController
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.transform.position = new Vector3(-8, -8.6f, 0);
+        player.changePosition(new Vector3(-8, -8.6f, 0));
     }
 
     void Update()
     {
+        //For testing
+        CheckIfSteppedOnBomb();
+        CheckIfWin();
+
         Debug.Log("Player cords: "+ GetComponent<Rigidbody2D>().transform.position);
         //For testing only
         //transform.position = new Vector3Int(-5, -16, 0);
@@ -152,6 +157,7 @@ public class MovementController : MonoBehaviour, IMovementController
     {
         if (up.GetTile(up.WorldToCell(transform.position)) == tower)
         {
+            player.changeWinning(true);
             //Print to console
             Debug.Log("Winner winner chicked dinner!");
             //Show mines
@@ -176,13 +182,7 @@ public class MovementController : MonoBehaviour, IMovementController
             if(!isWon)
             {
                 isDead = true;
-
-                //var inventoryBag = GameObject.FindGameObjectWithTag("Player").GetComponent<Bag>;
-                //inventoryBag.
-                //var bag = GameObject.FindGameObjectWithTag("Bag").gameObject;
-                //bag.SetActive(false);
-                
-                
+                player.changeDead(isDead);
 
                 //Print to console  
                 Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
@@ -244,7 +244,6 @@ public class MovementController : MonoBehaviour, IMovementController
             fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 - 1, 0, 0), null);
 
         }
-
     }
 
     public int GetNumberOfBombs(Vector3Int currentPlayerTile)

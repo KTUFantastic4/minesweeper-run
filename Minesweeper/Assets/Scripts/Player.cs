@@ -21,5 +21,18 @@ public class Player
     public void changePosition(Vector3 newPos)
     {
         this.position = newPos;
+        Debug.Log("Position changed to: "+ position);
+    }
+
+    public void changeWinning(bool hasWon)
+    {
+        this.hasWon = hasWon;
+        Debug.Log("Player hasWon changed");
+    }
+
+    public void changeDead(bool dead)
+    {
+        this.isDead = dead;
+        Debug.Log("Player isDead changed");
     }
 }

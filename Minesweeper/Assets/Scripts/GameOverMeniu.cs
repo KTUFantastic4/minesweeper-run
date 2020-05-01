@@ -48,8 +48,8 @@ public class GameOverMeniu : MonoBehaviour
         //    bybys.isClosed = true;
         //}
         
-        FindObjectOfType<Bag>().isClosed = false;
-        FindObjectOfType<Bag>().gameObject.SetActive(false);
+        //FindObjectOfType<Bag>().isClosed = false;
+        //FindObjectOfType<Bag>().gameObject.SetActive(false);
         player.isDead = true;
         
         //player.CancelInvoke();
