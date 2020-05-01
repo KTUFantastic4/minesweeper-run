@@ -83,7 +83,7 @@ namespace Tests
             Assert.AreEqual(spawn, newPosition);
         }
         //SITA GALI LIESTI
-        [UnityTest]
+        /*[UnityTest]
         public IEnumerator GameOverWhenSteppedOnBomb()
         {
             SceneManager.LoadScene(1);
@@ -96,9 +96,9 @@ namespace Tests
             bool isDead = player.GetComponent<MovementController>().isDead;
 
             Assert.AreEqual(true, isDead);
-        }
+        }*/
         //NELIESTI!!!
-        /*[UnityTest]
+        [UnityTest]
          public IEnumerator GameOverWhenSteppedOnBomb()
          {
              SceneManager.LoadScene(1);
@@ -111,9 +111,9 @@ namespace Tests
              bool isDead = player.GetComponent<MovementController>().isDead;
 
              Assert.AreEqual(true, isDead);
-         }*/
+         }
 
-        /*[UnityTest]
+        [UnityTest]
         public IEnumerator GameWinWhenSteppedOnTower()
         {
             SceneManager.LoadScene(1);
@@ -126,7 +126,7 @@ namespace Tests
             bool hasWon = player.GetComponent<MovementController>().isWon;
 
             Assert.AreEqual(true, hasWon);
-        }*/
+        }
         //(-7,-8.6,0) item
         //(-6.5,-8.1,0) bomb
         //(14,3.1,0) win
