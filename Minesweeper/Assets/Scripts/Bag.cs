@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bag : MonoBehaviour
 {
-    bool isClosed;
+    public bool isClosed = false;
     public GameObject bag;
 
     public void OpenCloseBag()
