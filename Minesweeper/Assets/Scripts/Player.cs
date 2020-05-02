@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player
 {
-    public int lives { get; set; }
+    public int lives { get; private set; }
+    public bool isRobot { get; set; }
     public bool hasWon { get; set; }
     public bool isDead { get; set; }
     public Vector3 position { get; private set; }
@@ -22,6 +23,18 @@ public class Player
     {
         this.position = newPos;
         Debug.Log("Position changed to: "+ position);
+    }
+
+    public void addLive()
+    {
+        this.lives  += 1;
+        Debug.Log("Added live " + lives);
+    }
+
+    public void subtractLive()
+    {
+        this.lives -= 1;
+        Debug.Log("Subtract live " + lives);
     }
 
     public void changeWinning(bool hasWon)

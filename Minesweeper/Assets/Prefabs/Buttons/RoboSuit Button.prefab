@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4435073914599648331}
   - component: {fileID: 2299383844131784900}
   - component: {fileID: 7989818733057228931}
+  - component: {fileID: 7411646346799823249}
   m_Layer: 5
   m_Name: RoboSuit Button
   m_TagString: Untagged
@@ -118,8 +119,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 295d0186b4360754cb750cf4d3951a56, type: 3}
-        m_MethodName: 
+      - m_Target: {fileID: 7411646346799823249}
+        m_MethodName: Use
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -142,3 +143,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 3719171167658936569, guid: 7a16a2e287ede0847a2d0e7f5932f381, type: 3}
+--- !u!114 &7411646346799823249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6480244225371875192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295d0186b4360754cb750cf4d3951a56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 0}

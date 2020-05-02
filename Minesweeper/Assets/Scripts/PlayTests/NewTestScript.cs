@@ -91,8 +91,7 @@ namespace Tests
             var player = GameObject.Find("Player");
             Assert.NotNull(player.GetComponent<MovementController>().bombs);
         }
-
-        //SITA GALI LIESTI
+        
         [UnityTest]
         public IEnumerator GameOverWhenSteppedOnBomb()
         {
@@ -100,30 +99,13 @@ namespace Tests
             yield return new WaitForSeconds(0.1f);
             var player = GameObject.Find("Player");
             Vector3 bombPos = new Vector3(-6.5f, -8.1f, 0);
-
             player.GetComponent<MovementController>().transform.position = bombPos;
+            player.GetComponent<MovementController>().checkPosition = true;
             yield return new WaitForSeconds(1f);
             bool isDead = player.GetComponent<MovementController>().isDead;
-            var bombs = player.GetComponent<MovementController>().bombs;
-            //player.GetComponent<MovementController>().bombs.WorldToCell;
 
             Assert.AreEqual(true, isDead);
         }
-        //NELIESTI!!!
-        /*[UnityTest]
-         public IEnumerator GameOverWhenSteppedOnBomb()
-         {
-             SceneManager.LoadScene(1);
-             yield return new WaitForSeconds(0.1f);
-             var player = GameObject.Find("Player");
-             Vector3 bombPos = new Vector3(-6.5f, -8.1f, 0);
-
-             player.GetComponent<MovementController>().transform.position = bombPos;
-             yield return new WaitForSeconds(1f);
-             bool isDead = player.GetComponent<MovementController>().isDead;
-
-             Assert.AreEqual(true, isDead);
-         }
 
         [UnityTest]
         public IEnumerator GameWinWhenSteppedOnTower()
@@ -131,14 +113,30 @@ namespace Tests
             SceneManager.LoadScene(1);
             yield return new WaitForSeconds(0.1f);
             var player = GameObject.Find("Player");
-            Vector3 bombPos = new Vector3(14, 3.1f, 0);
-
-            player.GetComponent<MovementController>().transform.position = bombPos;
+            Vector3 winPos = new Vector3(14, 3.1f, 0);
+            player.GetComponent<MovementController>().transform.position = winPos;
+            player.GetComponent<MovementController>().checkPosition = true;
             yield return new WaitForSeconds(1f);
             bool hasWon = player.GetComponent<MovementController>().isWon;
 
             Assert.AreEqual(true, hasWon);
-        }*/
+        }
+
+        [UnityTest]
+        public IEnumerator PickUpItem()
+        {
+            SceneManager.LoadScene(1);
+            yield return new WaitForSeconds(0.1f);
+            var player = GameObject.Find("Player");
+            int item = player.GetComponent<Inventory>().items[0];
+            Vector3 itemPos = new Vector3(-7, -8.6f, 0);
+            player.GetComponent<MovementController>().transform.position = itemPos;
+            yield return new WaitForSeconds(1f);
+            int newItem = player.GetComponent<Inventory>().items[0];
+
+            Assert.AreNotEqual(newItem, item);
+        }
+
         //(-7,-8.6,0) item
         //(-6.5,-8.1,0) bomb
         //(14,3.1,0) win
