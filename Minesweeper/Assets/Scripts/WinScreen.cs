@@ -45,6 +45,7 @@ public class WinScreen : MonoBehaviour
         FindObjectOfType<MovementController>().isWon = false;
         enabled = true;
         winScreen.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
     public void Restart()
     {
