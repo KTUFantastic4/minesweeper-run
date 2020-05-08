@@ -62,19 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\AudioManager.cs" />
-    <Compile Include="Assets\Scripts\Bag.cs" />
-    <Compile Include="Assets\Scripts\BasicCameraFollow.cs" />
-    <Compile Include="Assets\Scripts\GameOverMeniu.cs" />
-    <Compile Include="Assets\Scripts\HideTilemapColliderOnPlay.cs" />
-    <Compile Include="Assets\Scripts\Inventory.cs" />
-    <Compile Include="Assets\Scripts\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\MovementController.cs" />
-    <Compile Include="Assets\Scripts\Pickup.cs" />
-    <Compile Include="Assets\Scripts\Slot.cs" />
-    <Compile Include="Assets\Scripts\Sound.cs" />
-    <Compile Include="Assets\Scripts\Spawn.cs" />
-    <Compile Include="Assets\Scripts\WinScreen.cs" />
+    <Compile Include="Assets\Mute.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
@@ -335,6 +323,9 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>D:/Unity(neHub)/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="NSubstitute">
+      <HintPath>C:/Users/šienuks/Documents/GitHub/minesweeper-run/Minesweeper/Assets/Plugins/NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
       <HintPath>C:/Users/šienuks/Documents/GitHub/minesweeper-run/Minesweeper/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
@@ -690,6 +681,12 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>D:/Unity(neHub)/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Scripts.csproj">
+      <Project>{F09DA2A6-036A-C2E1-6252-3A6DE5A7CA27}</Project>
+      <Name>Scripts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

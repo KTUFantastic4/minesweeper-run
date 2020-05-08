@@ -41,6 +41,7 @@ public class GameOverMeniu : MonoBehaviour
             FindObjectOfType<AudioManager>().Play("DancingCoffin");
         }
         gameOverMenuUI.SetActive(true);
+        FindObjectOfType<AudioManager>().Stop("Background_Music");
         //Bag [] bybiai = FindObjectsOfType<Bag>();
         //foreach(Bag bybys in bybiai)
         //{
@@ -93,7 +94,7 @@ public class GameOverMeniu : MonoBehaviour
 
         gameOverMenuUI.SetActive(false);
         meniuIsOff = false;
-        Time.timeScale = 1f;
+       // Time.timeScale = 1f;
         player.isDead = false;
 
 
