@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 public class MovementController : MonoBehaviour
 {
+    //public float health;
+    public Text healthDisplay;
     //Stores input from the PlayerInput
     private Vector2 movementInput;
     private Vector3 direction;
@@ -19,14 +22,45 @@ public class MovementController : MonoBehaviour
     public Tilemap numbers;
     public Tile[] numbers_tile;
 
+<<<<<<< Updated upstream
+=======
+    private SpriteRenderer spriteRenderer;
+    public Sprite spriteRobo;
+    public Sprite health;
+    public Sprite sun;
+    public Sprite spritePlayer;
+    public bool checkPosition = false;
+
+    private Player player;
+    private Rigidbody2D rigidbody2D;
+    private BombDetection bombDetection;
+
+>>>>>>> Stashed changes
     public bool isDead = false;
 
     bool hasMoved;
 
     void Update()
     {
+<<<<<<< Updated upstream
 
         if(!isDead)
+=======
+        healthDisplay.text = player.lives.ToString();
+        //For testing
+        if (checkPosition)
+        {
+            CheckIfSteppedOnBomb();
+            CheckIfWin();
+            checkPosition = false;
+        }
+        
+        //Debug.Log("Player cords: "+ GetComponent<Rigidbody2D>().transform.position);
+        //For testing only
+        //transform.position = new Vector3Int(-5, -16, 0);
+        //rigidbody2D.MovePosition();
+        if (!isDead)
+>>>>>>> Stashed changes
         {
             if (movementInput.x == 0)
             {
@@ -42,6 +76,42 @@ public class MovementController : MonoBehaviour
 
     }
 
+<<<<<<< Updated upstream
+=======
+    public Tilemap GetBombsTilemap()
+    {
+        return bombs;
+    }
+
+    public Vector3Int GetCurrentPosition()
+    {
+        return bombs.WorldToCell(transform.position);
+    }
+
+    public void RobotItemUsed()
+    {
+        this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
+        player.addLive();
+        player.isRobot = true;
+        Debug.Log("Robot item used");
+    }
+
+    public void HealthItemUsed()
+    {
+        this.GetComponent<SpriteRenderer>().sprite = health;
+        player.addLive();
+        //player.isRobot = true;
+        //Debug.Log("Robot item used");
+    }
+
+    public void SunItemUsed()
+    {
+        this.GetComponent<SpriteRenderer>().sprite = sun;
+        player.addLive();
+        //player.isRobot = true;
+        //Debug.Log("Robot item used");
+    }
+>>>>>>> Stashed changes
     public void GetMovementDirection()
     {
         if (movementInput.x < 0)
@@ -123,7 +193,11 @@ public class MovementController : MonoBehaviour
         }
     }
     //Check if player steped on mine
+<<<<<<< Updated upstream
     private void CheckIfSteppedOnBomb()
+=======
+    public bool CheckIfSteppedOnBomb()
+>>>>>>> Stashed changes
     {
         if (bombs.GetTile(bombs.WorldToCell(transform.position)) != null && !isDead)
         {
