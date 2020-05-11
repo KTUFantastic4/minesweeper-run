@@ -49,11 +49,6 @@ public class MovementController : MonoBehaviour
         //this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
     }
 
-    public void LoadForTesting()
-    {
-
-    }
-
     void Update()
     {
         //For testing
@@ -63,7 +58,14 @@ public class MovementController : MonoBehaviour
             CheckIfWin();
             checkPosition = false;
         }
-
+        if (player.isRobot)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
+        }
+        else
+        {
+            this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
+        }
         //Debug.Log("Player cords: "+ GetComponent<Rigidbody2D>().transform.position);
         //For testing only
         //transform.position = new Vector3Int(-5, -16, 0);
