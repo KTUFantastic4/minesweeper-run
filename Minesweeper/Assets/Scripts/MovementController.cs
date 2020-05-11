@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 [RequireComponent(typeof(Rigidbody2D))]
-public class MovementController : MonoBehaviour, IMovementController
+public class MovementController : MonoBehaviour
 {
     //Stores input from the PlayerInput
     private Vector2 movementInput;
