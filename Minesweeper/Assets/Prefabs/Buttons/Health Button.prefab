@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9145033304730360953}
   - component: {fileID: 3299464421610788921}
   - component: {fileID: 1826642104051614480}
-  - component: {fileID: -4125232072967856927}
+  - component: {fileID: -3748634071370619059}
   m_Layer: 5
   m_Name: Health Button
   m_TagString: Untagged
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -4125232072967856927}
+      - m_Target: {fileID: -3748634071370619059}
         m_MethodName: Use
         m_Mode: 1
         m_Arguments:
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 6068429680088249842, guid: dccccf1ba23f637438ad6192161ddd3b, type: 3}
---- !u!114 &-4125232072967856927
+--- !u!114 &-3748634071370619059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3788168619812596522}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f9d8c43224f1654f8466e8077ddccf6, type: 3}
+  m_Script: {fileID: 11500000, guid: 81732fe7c52ed6648badc9386b65a094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 1311468735239996, guid: 47942b79f7f67ea4bad815b5cfced9c2, type: 3}

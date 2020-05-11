@@ -18,7 +18,7 @@ public class RoboSuitItem : MonoBehaviour
         //GameObject.Find("Player").GetComponent<Player>().lives += 1;
         var playerObject = GameObject.Find("Player");
         playerObject.GetComponent<MovementController>().RobotItemUsed();
-        Instantiate(effect, player.position, Quaternion.identity);
+        //Instantiate(effect, player.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

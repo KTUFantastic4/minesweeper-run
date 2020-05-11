@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player:MonoBehaviour
+public class Player
 {
     public int lives { get; private set; }
     public bool isRobot { get; set; }
