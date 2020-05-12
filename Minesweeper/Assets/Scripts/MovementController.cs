@@ -229,6 +229,7 @@ public class MovementController : MonoBehaviour, IMovementController
                 player.subtractLive();
                 if (player.isRobot)
                 {
+
                     player.isRobot = false;
                     this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
                 }
