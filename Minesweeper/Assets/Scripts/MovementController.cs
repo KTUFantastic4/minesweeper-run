@@ -36,6 +36,9 @@ public class MovementController : MonoBehaviour, IMovementController
     public bool isDead = false;
     public bool isWon = false;
 
+    
+    
+
     bool hasMoved;
     public int vision = 1;
 
@@ -44,6 +47,7 @@ public class MovementController : MonoBehaviour, IMovementController
     {
         player = new Player();
         bombDetection = new BombDetection();
+        
     }
 
     private void Start()
@@ -51,6 +55,12 @@ public class MovementController : MonoBehaviour, IMovementController
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.transform.position = new Vector3(-8, -8.6f, 0);
         player.changePosition(new Vector3(-8, -8.6f, 0));
+
+        
+       
+
+
+        
         //this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
     }
 

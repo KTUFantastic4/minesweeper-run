@@ -22,7 +22,16 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         Play("Background_Music");
+        OptionData data = SaveSystem.LoadOption();
+        if(data != null)
+        {
+            SetVolume(data.volume, "Background_Music");
+        }
+
         isMuted = false;
+
+
+
     }
 
     public void Play(string name)
@@ -45,6 +54,17 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.Stop();
+    }
+    public void Mute(string name,bool mute)
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound \"" + name + "\" not found.Cannot turn off this sound");
+            return;
+        }
+        s.source.mute = mute;
+        
     }
     public void SetVolume(float volume,string name)
     {

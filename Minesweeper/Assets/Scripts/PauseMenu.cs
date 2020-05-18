@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public static bool isPaused = false;
+    public static bool isMuted = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class PauseMenu : MonoBehaviour
                 Pause();
             }
         }
+        
     }
     public void Pause()
     {
@@ -44,5 +46,35 @@ public class PauseMenu : MonoBehaviour
 
         Debug.Log("Loading Main Menu...");
         SceneManager.LoadScene("Menu");
+    }
+    public void MuteSound()
+    {
+
+        Debug.Log("veik");
+        if (!isMuted)
+        {
+
+
+            Debug.Log("Muting");
+            FindObjectOfType<AudioManager>().Mute("Background_Music",true);
+            isMuted = true;
+
+
+        }
+        else
+        {
+            Debug.Log("Unmuting");
+            FindObjectOfType<AudioManager>().Mute("Background_Music",false);
+            isMuted = false;
+
+        }
+
+
+    }
+    public void SetSound(float volume)
+    {
+        //Debug.Log(volume);
+        //audioMixer.SetFloat("Volume", volume);
+        FindObjectOfType<AudioManager>().SetVolume(volume, "Background_Music");
     }
 }
