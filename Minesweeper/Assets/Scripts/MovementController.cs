@@ -27,6 +27,7 @@ public class MovementController : MonoBehaviour, IMovementController
     public Sprite sun;
     public Sprite food;
     public Sprite spritePlayer;
+    public Vector3Int currentPlayerTile;
     public bool checkPosition = false;
 
     private Player player;
@@ -74,11 +75,20 @@ public class MovementController : MonoBehaviour, IMovementController
         //For testing
         if (checkPosition)
         {
-            CheckIfSteppedOnBomb();
+            currentPlayerTile = bombs.WorldToCell(rigidbody2D.transform.position);
+            CheckIfSteppedOnBomb(currentPlayerTile);
             CheckIfWin();
             checkPosition = false;
         }
 
+        if (player.isRobot)
+        {
+            this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
+        }
+        else
+        {
+            this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
+        }
         //Debug.Log("Player cords: "+ GetComponent<Rigidbody2D>().transform.position);
         //For testing only
         //transform.position = new Vector3Int(-5, -16, 0);
@@ -98,7 +108,6 @@ public class MovementController : MonoBehaviour, IMovementController
             }
         }
         healthDisplay.text = player.lives.ToString();
-
     }
 
     public Tilemap GetBombsTilemap()
@@ -114,7 +123,7 @@ public class MovementController : MonoBehaviour, IMovementController
     public void RobotItemUsed()
     {
         this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
-        player.addLive();
+        //player.addLive();
         player.isRobot = true;
         Debug.Log("Robot item used");
     }
@@ -127,8 +136,39 @@ public class MovementController : MonoBehaviour, IMovementController
 
     public void SunItemUsed()
     {
-        this.GetComponent<SpriteRenderer>().sprite = sun;
-        player.addLive();
+        currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+        if (currentPlayerTile.y % 2 == 0)
+        {
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 - 1, 0 - 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0, 0 - 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 + 1, 0, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0, 0 + 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 - 1, 0 + 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 - 1, 0, 0));
+
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 - 1, 0 - 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0, 0 - 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 + 1, 0, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0, 0 + 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 - 1, 0 + 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 - 1, 0, 0),true);
+        }
+        else
+        {
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0, 0 - 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 + 1, 0 - 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 + 1, 0, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 + 1, 0 + 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0, 0 + 1, 0));
+            UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 - 1, 0, 0));
+
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0, 0 - 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 + 1, 0 - 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 + 1, 0, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 + 1, 0 + 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0, 0 + 1, 0),true);
+            CheckIfSteppedOnBomb(currentPlayerTile + new Vector3Int(0 - 1, 0, 0),true);
+        }
     }
 
     public void FoodItemUsed()
@@ -161,9 +201,11 @@ public class MovementController : MonoBehaviour, IMovementController
             {
 
                 transform.position += direction;
-                UpdateFogOfWar();
+                currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+                UpdateFogOfWar(currentPlayerTile);
             }
-            CheckIfSteppedOnBomb();
+            currentPlayerTile = bombs.WorldToCell(rigidbody2D.transform.position);
+            CheckIfSteppedOnBomb(currentPlayerTile);
             UpdateNumbers();
 
         }
@@ -189,10 +231,11 @@ public class MovementController : MonoBehaviour, IMovementController
             {
 
                 transform.position += direction;
-                UpdateFogOfWar();
+                currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+                UpdateFogOfWar(currentPlayerTile);
             }
-            
-            CheckIfSteppedOnBomb();
+            currentPlayerTile = bombs.WorldToCell(rigidbody2D.transform.position);
+            CheckIfSteppedOnBomb(currentPlayerTile);
             UpdateNumbers();
         }
         CheckIfWin();
@@ -221,27 +264,31 @@ public class MovementController : MonoBehaviour, IMovementController
             Debug.Log("Winner winner chicked dinner!");
             //Show mines
             bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
-            isWon = true;
-            
-            
+            isWon = true;           
         }
     }
     //Check if player steped on mine
-    private bool CheckIfSteppedOnBomb()
+    private bool CheckIfSteppedOnBomb(Vector3Int currentPlayerTile, bool item = false)
     {
-        Vector3Int currentPlayerTile = bombs.WorldToCell(rigidbody2D.transform.position);
+        //Vector3Int currentPlayerTile = bombs.WorldToCell(rigidbody2D.transform.position);
 
         //if (bombs.GetTile(currentPlayerTile) != null && !isDead)
         if (bombDetection.HandlePlayerInteractionWithBombs(bombs, currentPlayerTile) && !isDead)
         {
-            if (player.lives > 1)
+            if (item)
             {
-                player.subtractLive();
+                tilemap.SetTile(currentPlayerTile + new Vector3Int(0, 0, 0), bomb);
+            }else if (player.isRobot)
+            {
                 if (player.isRobot)
                 {
                     player.isRobot = false;
                     this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
                 }
+            }
+            else if (player.lives > 1)
+            {
+                player.subtractLive();
             }else{
                 //Show mines
                 bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
@@ -265,7 +312,7 @@ public class MovementController : MonoBehaviour, IMovementController
     //Set numbers to tiles
     private void UpdateNumbers()
     {
-        Vector3Int currentPlayerTile = bombs.WorldToCell(transform.position);
+        currentPlayerTile = bombs.WorldToCell(transform.position);
 
         int bombsNumber = GetNumberOfBombs(currentPlayerTile);
         if (bombsNumber > 0)
@@ -277,9 +324,9 @@ public class MovementController : MonoBehaviour, IMovementController
         }
     }
     
-    private void UpdateFogOfWar()
+    private void UpdateFogOfWar(Vector3Int currentPlayerTile)
     {
-        Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+        //Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
         fogOfWar.SetTile(currentPlayerTile, null);
         if (currentPlayerTile.y % 2 == 0)
         {
