@@ -6,7 +6,7 @@ unit-test:
   script: "C:\Program Files\Unity\Hub\Editor\2019.3.13f1\Editor\Unity \
     -batchmode \
     -projectPath . \
-    -runTests -testPlatform playmode \
+    -runTests -testPlatform editmode \
     -logFile \
     -testResults ./unit-tests.xml"
   stage: test
