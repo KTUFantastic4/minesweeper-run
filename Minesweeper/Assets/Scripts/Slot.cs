@@ -23,7 +23,7 @@ public class Slot : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            //child.GetComponent<Spawn>().SpawnDroppedItem();
+            child.GetComponent<Spawn>().SpawnDroppedItem();
             GameObject.Destroy(child.gameObject);
         }
     }

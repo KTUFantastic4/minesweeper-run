@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-
-public class MovementController : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class MovementController : MonoBehaviour, IMovementController
 {
     //Stores input from the PlayerInput
     private Vector2 movementInput;
@@ -12,6 +12,7 @@ public class MovementController : MonoBehaviour
 
     public Tile water;
     public Tile tower;
+    public Tile bomb;
     public Tilemap tilemap;
     public Tilemap up;
     public Tilemap fogOfWar;
@@ -19,14 +20,55 @@ public class MovementController : MonoBehaviour
     public Tilemap numbers;
     public Tile[] numbers_tile;
 
+    private SpriteRenderer spriteRenderer;
+    public Sprite spriteRobo;
+    public Sprite spritePlayer;
+    public bool checkPosition = false;
+
+    private Player player;
+    private Rigidbody2D rigidbody2D;
+    private BombDetection bombDetection;
+
     public bool isDead = false;
+    public bool isWon = false;
 
     bool hasMoved;
+    public int vision = 1;
+
+    private void Awake()
+    {
+        player = new Player();
+        bombDetection = new BombDetection();
+    }
+
+    private void Start()
+    {
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        rigidbody2D.transform.position = new Vector3(-8, -8.6f, 0);
+        player.changePosition(new Vector3(-8, -8.6f, 0));
+        //this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
+    }
+
+    public void LoadForTesting()
+    {
+
+    }
 
     void Update()
     {
+        //For testing
+        if (checkPosition)
+        {
+            CheckIfSteppedOnBomb();
+            CheckIfWin();
+            checkPosition = false;
+        }
 
-        if(!isDead)
+        //Debug.Log("Player cords: "+ GetComponent<Rigidbody2D>().transform.position);
+        //For testing only
+        //transform.position = new Vector3Int(-5, -16, 0);
+        //rigidbody2D.MovePosition();
+        if (!isDead)
         {
             if (movementInput.x == 0)
             {
@@ -35,11 +77,30 @@ public class MovementController : MonoBehaviour
             else if (movementInput.x != 0 && !hasMoved)
             {
                 hasMoved = true;
+                Debug.Log("Player input detected");
 
                 GetMovementDirection();
             }
         }
 
+    }
+
+    public Tilemap GetBombsTilemap()
+    {
+        return bombs;
+    }
+
+    public Vector3Int GetCurrentPosition()
+    {
+        return bombs.WorldToCell(transform.position);
+    }
+
+    public void RobotItemUsed()
+    {
+        this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
+        player.addLive();
+        player.isRobot = true;
+        Debug.Log("Robot item used");
     }
 
     public void GetMovementDirection()
@@ -96,21 +157,24 @@ public class MovementController : MonoBehaviour
                 transform.position += direction;
                 UpdateFogOfWar();
             }
-            CheckIfWin();
+            
             CheckIfSteppedOnBomb();
             UpdateNumbers();
         }
+        CheckIfWin();
 
     }
 
     public void OnMove(InputValue value)
     {
         movementInput = value.Get<Vector2>();
+        Debug.Log("On move value: " + movementInput);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         transform.position -= direction;
+        Debug.Log("Collision");
     }
 
     //Check if player reached finish
@@ -118,26 +182,50 @@ public class MovementController : MonoBehaviour
     {
         if (up.GetTile(up.WorldToCell(transform.position)) == tower)
         {
+            player.changeWinning(true);
             //Print to console
             Debug.Log("Winner winner chicked dinner!");
+            //Show mines
+            bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
+            isWon = true;
+            
+            
         }
     }
     //Check if player steped on mine
-    private void CheckIfSteppedOnBomb()
+    private bool CheckIfSteppedOnBomb()
     {
-        if (bombs.GetTile(bombs.WorldToCell(transform.position)) != null && !isDead)
-        {
-            //Show mines
-            bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
+        Vector3Int currentPlayerTile = bombs.WorldToCell(rigidbody2D.transform.position);
 
-            //Print to console         
-            
-            isDead = true;
-            
-            Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
-            Debug.Log("BOOOOM!");
-            
+        //if (bombs.GetTile(currentPlayerTile) != null && !isDead)
+        if (bombDetection.HandlePlayerInteractionWithBombs(bombs, currentPlayerTile) && !isDead)
+        {
+            if (player.lives > 1)
+            {
+                player.subtractLive();
+                if (player.isRobot)
+                {
+                    player.isRobot = false;
+                    this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
+                }
+            }else{
+                //Show mines
+                bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
+
+                //Check if not won  
+                if (!isWon)
+                {
+                    isDead = true;
+                    player.changeDead(isDead);
+
+                    //Print to console  
+                    Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
+                    Debug.Log("BOOOOM!" + currentPlayerTile);
+                    return true;
+                }
+            }
         }
+        return false;
     }
 
     //Set numbers to tiles
@@ -147,27 +235,14 @@ public class MovementController : MonoBehaviour
 
         int bombsNumber = GetNumberOfBombs(currentPlayerTile);
         if (bombsNumber > 0)
+        {
             numbers.SetTile(currentPlayerTile, numbers_tile[bombsNumber - 1]);
+        }else if(bombsNumber == -1 && player.lives==1)
+        {
+            tilemap.SetTile(currentPlayerTile + new Vector3Int(0, 0, 0), bomb);
+        }
     }
-
-
-    public int vision = 1;
-
-    /*   void UpdateFogOfWar()
-       {
-           Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
-
-           //Clear the surrounding tiles
-           for (int x = -vision; x <= vision; x++)
-           {
-               for (int y = -vision; y <= vision; y++)
-               {
-                   fogOfWar.SetTile(currentPlayerTile + new Vector3Int(x, y, 0), null);
-               }
-
-           }
-
-       }*/
+    
     private void UpdateFogOfWar()
     {
         Vector3Int currentPlayerTile = fogOfWar.WorldToCell(transform.position);
@@ -191,11 +266,14 @@ public class MovementController : MonoBehaviour
             fogOfWar.SetTile(currentPlayerTile + new Vector3Int(0 - 1, 0, 0), null);
 
         }
-
     }
 
     public int GetNumberOfBombs(Vector3Int currentPlayerTile)
     {
+        if (bombs.GetTile(currentPlayerTile) != null)
+        {
+            return -1;
+        }
         int bombsNumber = 0;
         if (currentPlayerTile.y % 2 == 0)
         {
