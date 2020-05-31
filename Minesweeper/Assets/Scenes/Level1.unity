@@ -6047,6 +6047,7 @@ GameObject:
   - component: {fileID: 151505805}
   - component: {fileID: 151505807}
   - component: {fileID: 151505806}
+  - component: {fileID: 151505808}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6113,6 +6114,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151505804}
   m_CullTransparentMesh: 0
+--- !u!114 &151505808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 151505804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.057849795, g: 0.3367353, b: 0.9433962, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &177547821
 GameObject:
   m_ObjectHideFlags: 0
@@ -6205,7 +6221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3490566, g: 0.2980153, b: 0.2980153, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6699,6 +6715,7 @@ GameObject:
   - component: {fileID: 412819104}
   - component: {fileID: 412819106}
   - component: {fileID: 412819105}
+  - component: {fileID: 412819107}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -6765,6 +6782,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412819103}
   m_CullTransparentMesh: 0
+--- !u!114 &412819107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412819103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &459535379
 GameObject:
   m_ObjectHideFlags: 0
@@ -7498,6 +7530,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 245914736}
+  slider: {fileID: 1640811758}
+  panel: {fileID: 2110700513}
 --- !u!1 &627949088
 GameObject:
   m_ObjectHideFlags: 0
@@ -14190,6 +14224,7 @@ GameObject:
   - component: {fileID: 1130552676}
   - component: {fileID: 1130552678}
   - component: {fileID: 1130552677}
+  - component: {fileID: 1130552679}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -14256,6 +14291,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130552675}
   m_CullTransparentMesh: 0
+--- !u!114 &1130552679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130552675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.051397298, g: 0.3868631, b: 0.990566, a: 0.5}
+  m_EffectDistance: {x: 4, y: -4}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1169389083
 GameObject:
   m_ObjectHideFlags: 0
@@ -14306,7 +14356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9622642, g: 0.95685405, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -14919,7 +14969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.0698705, b: 0, a: 0.64705884}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -16306,7 +16356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.990566, g: 0.47329757, b: 0.023362402, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -17618,6 +17668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1640811757}
   - component: {fileID: 1640811758}
+  - component: {fileID: 1640811759}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -17667,7 +17718,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NormalColor: {r: 0.99215686, g: 0.10203011, b: 0, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -17708,6 +17759,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1640811759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640811756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a58e120618ffa4b4e8709599e06aa154, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui: {fileID: 1640811758}
 --- !u!1 &1699968188
 GameObject:
   m_ObjectHideFlags: 0
@@ -18088,7 +18152,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.032707386, g: 0.990566, b: 0.16293178, a: 0}
-    m_HighlightedColor: {r: 0.03137255, g: 0.9921569, b: 0.16470589, a: 0.64705884}
+    m_HighlightedColor: {r: 0.03137255, g: 0.9921569, b: 0.16470589, a: 0.6666667}
     m_PressedColor: {r: 0.03137255, g: 0.9921569, b: 0.16470589, a: 0.85882354}
     m_SelectedColor: {r: 0.05071813, g: 0.9811321, b: 0.041651815, a: 0.9372549}
     m_DisabledColor: {r: 0.050980397, g: 0.9803922, b: 0.043137256, a: 0}
@@ -18253,6 +18317,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308368722610117357, guid: 9e175dfe1ceeee24b85c79332e2aef7c,
+        type: 3}
+      propertyPath: sounds.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308368722610117357, guid: 9e175dfe1ceeee24b85c79332e2aef7c,
+        type: 3}
+      propertyPath: sounds.Array.data[4].name
+      value: GtaWin
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308368722610117357, guid: 9e175dfe1ceeee24b85c79332e2aef7c,
+        type: 3}
+      propertyPath: sounds.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 98b880c88e26d314784bf9a2b3c25045, type: 3}
+    - target: {fileID: 2308368722610117357, guid: 9e175dfe1ceeee24b85c79332e2aef7c,
+        type: 3}
+      propertyPath: sounds.Array.data[4].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308368722610117357, guid: 9e175dfe1ceeee24b85c79332e2aef7c,
+        type: 3}
+      propertyPath: sounds.Array.data[4].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308368722610117357, guid: 9e175dfe1ceeee24b85c79332e2aef7c,
+        type: 3}
+      propertyPath: sounds.Array.data[4].loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2308368722610117358, guid: 9e175dfe1ceeee24b85c79332e2aef7c,
         type: 3}

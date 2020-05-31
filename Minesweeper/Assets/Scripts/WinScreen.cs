@@ -24,7 +24,8 @@ public class WinScreen : MonoBehaviour
     void Show()
     {
         winScreen.SetActive(true);
-        FindObjectOfType<AudioManager>().Play("TF2Victory");
+        //FindObjectOfType<AudioManager>().Play("TF2Victory");
+        FindObjectOfType<AudioManager>().Play("GtaWin");
         enabled = false;
         FindObjectOfType<GameOverMeniu>().enabled = false;
         FindObjectOfType<AudioManager>().Stop("Background_Music");
