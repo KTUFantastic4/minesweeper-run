@@ -11,7 +11,7 @@ public class MovementController : MonoBehaviour, IMovementController
     private Vector2 movementInput;
     private Vector3 direction;
 
-    public Tile water;
+    public Tile water, lava;
     public Tile tower;
     public Tile bomb;
     public Tilemap tilemap;
@@ -102,6 +102,7 @@ public class MovementController : MonoBehaviour, IMovementController
             else if (movementInput.x != 0 && !hasMoved)
             {
                 hasMoved = true;
+                FindObjectOfType<AudioManager>().Play("MovingSound");
                 Debug.Log("Player input detected");
 
                 GetMovementDirection();
@@ -177,6 +178,7 @@ public class MovementController : MonoBehaviour, IMovementController
     public void FoodItemUsed()
     {
         this.GetComponent<SpriteRenderer>().sprite = food;
+        FindObjectOfType<AudioManager>().Play("FoodUseSound");
         player.addLive();
     }
 
@@ -200,6 +202,7 @@ public class MovementController : MonoBehaviour, IMovementController
             if (up.GetTile(up.WorldToCell(transform.position + direction)) == tower ||
                 (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null &&
                 tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water &&
+                tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != lava &&
                 up.GetTile(up.WorldToCell(transform.position + direction)) == null))
             {
 
@@ -278,6 +281,7 @@ public class MovementController : MonoBehaviour, IMovementController
         //if (bombs.GetTile(currentPlayerTile) != null && !isDead)
         if (bombDetection.HandlePlayerInteractionWithBombs(bombs, currentPlayerTile) && !isDead)
         {
+            FindObjectOfType<AudioManager>().Play("MineBlowingSound");
             if (item)
             {
                 tilemap.SetTile(currentPlayerTile + new Vector3Int(0, 0, 0), bomb);
@@ -286,6 +290,7 @@ public class MovementController : MonoBehaviour, IMovementController
                 if (player.isRobot)
                 {
                     player.isRobot = false;
+                    FindObjectOfType<AudioManager>().Play("DestroyRobotSound");
                     this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
                 }
             }
