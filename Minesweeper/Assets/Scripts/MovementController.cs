@@ -292,7 +292,7 @@ public class MovementController : MonoBehaviour, IMovementController
             }else{
                 //Show mines
                 bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
-
+                player.subtractLive();
                 //Check if not won  
                 if (!isWon)
                 {
@@ -318,7 +318,7 @@ public class MovementController : MonoBehaviour, IMovementController
         if (bombsNumber > 0)
         {
             numbers.SetTile(currentPlayerTile, numbers_tile[bombsNumber - 1]);
-        }else if(bombsNumber == -1 && player.lives==1)
+        }else if(bombsNumber == -1 && player.lives>=1)
         {
             tilemap.SetTile(currentPlayerTile + new Vector3Int(0, 0, 0), bomb);
         }
