@@ -44,6 +44,9 @@ public class MovementController : MonoBehaviour, IMovementController
     public int vision = 1;
 
     public Text healthDisplay;
+    public Text timerText;
+    private float startTime;
+    private bool finnished = false;
     private void Awake()
     {
         player = new Player();
@@ -53,15 +56,11 @@ public class MovementController : MonoBehaviour, IMovementController
 
     private void Start()
     {
+        startTime = Time.time;
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.transform.position = new Vector3(-8, -8.6f, 0);
         player.changePosition(new Vector3(-8, -8.6f, 0));
 
-        
-       
-
-
-        
         //this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
     }
 
@@ -109,6 +108,16 @@ public class MovementController : MonoBehaviour, IMovementController
             }
         }
         healthDisplay.text = player.lives.ToString();
+        if (finnished)
+        {
+            return;
+        }
+        float t = Time.time - startTime;
+
+        string minutes = ((int)t / 60).ToString("00");
+        string seconds = (t % 60).ToString("00");
+
+        timerText.text = "Time: " + minutes + ":" + seconds;
     }
 
     public Tilemap GetBombsTilemap()
@@ -268,6 +277,7 @@ public class MovementController : MonoBehaviour, IMovementController
             player.changeWinning(true);
             //Print to console
             Debug.Log("Winner winner chicked dinner!");
+            finnished = true;
             //Show mines
             bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
             isWon = true;           
@@ -285,7 +295,8 @@ public class MovementController : MonoBehaviour, IMovementController
             if (item)
             {
                 tilemap.SetTile(currentPlayerTile + new Vector3Int(0, 0, 0), bomb);
-            }else if (player.isRobot)
+            }
+            else if (player.isRobot)
             {
                 if (player.isRobot)
                 {
@@ -306,6 +317,7 @@ public class MovementController : MonoBehaviour, IMovementController
                 {
                     isDead = true;
                     player.changeDead(isDead);
+                    finnished = true;
 
                     //Print to console  
                     Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
