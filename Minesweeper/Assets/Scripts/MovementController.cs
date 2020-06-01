@@ -125,18 +125,21 @@ public class MovementController : MonoBehaviour, IMovementController
         this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
         //player.addLive();
         player.isRobot = true;
+        FindObjectOfType<AudioManager>().Play("RoboUseSound");
         Debug.Log("Robot item used");
     }
 
     public void HealthItemUsed()
     {
         this.GetComponent<SpriteRenderer>().sprite = health;
+        FindObjectOfType<AudioManager>().Play("HealthUseSound");
         player.addLive();
     }
 
     public void SunItemUsed()
     {
         currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+        FindObjectOfType<AudioManager>().Play("SunUseSound");
         if (currentPlayerTile.y % 2 == 0)
         {
             UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 - 1, 0 - 1, 0));

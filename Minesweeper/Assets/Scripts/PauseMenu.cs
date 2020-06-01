@@ -100,10 +100,14 @@ public class PauseMenu : MonoBehaviour
     {
         //Debug.Log(volume);
         //audioMixer.SetFloat("Volume", volume);
-       
+       if(volume >0)
+        {
+            isMuted = false;
+        }
         if(!isMuted)
         {
             FindObjectOfType<AudioManager>().SetVolume(volume, "Background_Music");
+            
             SaveSystem.SaveOptions(volume);
         }
     }
