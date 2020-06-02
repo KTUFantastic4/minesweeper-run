@@ -19,24 +19,24 @@ public class Mute : MonoBehaviour
     {
         
         Debug.Log("veik");
-        
-        
         if (!isMuted)
         {
-            
+
 
             Debug.Log("Muting");
             FindObjectOfType<AudioManager>().Stop("Background_Music");
             isMuted = true;
-            
-            
+
+
         }
         else
         {
             Debug.Log("Unmuting");
             FindObjectOfType<AudioManager>().Play("Background_Music");
             isMuted = false;
-            
+
         }
+
+
     }
 }

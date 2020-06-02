@@ -21,8 +21,9 @@ public class Pickup : MonoBehaviour
                 if (inventory.items[i] == 0)
                 {
                     inventory.items[i] = 1;
+                    
                     Instantiate(itemButton, inventory.slots[i].transform, false);
-                    Destroy(gameObject);
+                    Destroy(gameObject);FindObjectOfType<AudioManager>().Play("PickupSound");
                     break;
                 }
             }

@@ -11,7 +11,7 @@ public class MovementController : MonoBehaviour, IMovementController
     private Vector2 movementInput;
     private Vector3 direction;
 
-    public Tile water;
+    public Tile water, lava;
     public Tile tower;
     public Tile bomb;
     public Tilemap tilemap;
@@ -37,21 +37,34 @@ public class MovementController : MonoBehaviour, IMovementController
     public bool isDead = false;
     public bool isWon = false;
 
+
+    OptionData data;
+
     bool hasMoved;
     public int vision = 1;
 
     public Text healthDisplay;
+    public Text timerText;
+    private float startTime;
+    private bool finnished = false;
     private void Awake()
     {
         player = new Player();
         bombDetection = new BombDetection();
+        
     }
 
     private void Start()
     {
+        startTime = Time.time;
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.transform.position = new Vector3(-8, -8.6f, 0);
         player.changePosition(new Vector3(-8, -8.6f, 0));
+        data = SaveSystem.LoadOption();
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "PickupSound");
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "GtaWin");
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "DancingCoffin");
+
         //this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
     }
 
@@ -92,12 +105,24 @@ public class MovementController : MonoBehaviour, IMovementController
             else if (movementInput.x != 0 && !hasMoved)
             {
                 hasMoved = true;
+                FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "MovingSound");
+                FindObjectOfType<AudioManager>().Play("MovingSound");
                 Debug.Log("Player input detected");
 
                 GetMovementDirection();
             }
         }
         healthDisplay.text = player.lives.ToString();
+        if (finnished)
+        {
+            return;
+        }
+        float t = Time.time - startTime;
+
+        string minutes = ((int)t / 60).ToString("00");
+        string seconds = (t % 60).ToString("00");
+
+        timerText.text = "Time: " + minutes + ":" + seconds;
     }
 
     public Tilemap GetBombsTilemap()
@@ -115,18 +140,24 @@ public class MovementController : MonoBehaviour, IMovementController
         this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
         //player.addLive();
         player.isRobot = true;
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "RoboUseSound");
+        FindObjectOfType<AudioManager>().Play("RoboUseSound");
         Debug.Log("Robot item used");
     }
 
     public void HealthItemUsed()
     {
         this.GetComponent<SpriteRenderer>().sprite = health;
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "HealthUseSound");
+        FindObjectOfType<AudioManager>().Play("HealthUseSound");
         player.addLive();
     }
 
     public void SunItemUsed()
     {
         currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "SunUseSound");
+        FindObjectOfType<AudioManager>().Play("SunUseSound");
         if (currentPlayerTile.y % 2 == 0)
         {
             UpdateFogOfWar(currentPlayerTile + new Vector3Int(0 - 1, 0 - 1, 0));
@@ -164,6 +195,8 @@ public class MovementController : MonoBehaviour, IMovementController
     public void FoodItemUsed()
     {
         this.GetComponent<SpriteRenderer>().sprite = food;
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "FoodUseSound");
+        FindObjectOfType<AudioManager>().Play("FoodUseSound");
         player.addLive();
     }
 
@@ -187,6 +220,7 @@ public class MovementController : MonoBehaviour, IMovementController
             if (up.GetTile(up.WorldToCell(transform.position + direction)) == tower ||
                 (tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != null &&
                 tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != water &&
+                tilemap.GetTile(tilemap.WorldToCell(transform.position + direction)) != lava &&
                 up.GetTile(up.WorldToCell(transform.position + direction)) == null))
             {
 
@@ -252,6 +286,7 @@ public class MovementController : MonoBehaviour, IMovementController
             player.changeWinning(true);
             //Print to console
             Debug.Log("Winner winner chicked dinner!");
+            finnished = true;
             //Show mines
             bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
             isWon = true;           
@@ -265,14 +300,19 @@ public class MovementController : MonoBehaviour, IMovementController
         //if (bombs.GetTile(currentPlayerTile) != null && !isDead)
         if (bombDetection.HandlePlayerInteractionWithBombs(bombs, currentPlayerTile) && !isDead)
         {
+            FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "MineBlowingSound");
+            FindObjectOfType<AudioManager>().Play("MineBlowingSound");
             if (item)
             {
                 tilemap.SetTile(currentPlayerTile + new Vector3Int(0, 0, 0), bomb);
-            }else if (player.isRobot)
+            }
+            else if (player.isRobot)
             {
                 if (player.isRobot)
                 {
                     player.isRobot = false;
+                    FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "DestroyRobotSound");
+                    FindObjectOfType<AudioManager>().Play("DestroyRobotSound");
                     this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
                 }
             }
@@ -282,12 +322,13 @@ public class MovementController : MonoBehaviour, IMovementController
             }else{
                 //Show mines
                 bombs.GetComponent<TilemapRenderer>().sortingOrder = (int)(GetComponent<Renderer>().transform.position.y + 1000);
-
+                player.subtractLive();
                 //Check if not won  
                 if (!isWon)
                 {
                     isDead = true;
                     player.changeDead(isDead);
+                    finnished = true;
 
                     //Print to console  
                     Debug.Log(bombs.GetTile(bombs.WorldToCell(transform.position)));
@@ -308,7 +349,7 @@ public class MovementController : MonoBehaviour, IMovementController
         if (bombsNumber > 0)
         {
             numbers.SetTile(currentPlayerTile, numbers_tile[bombsNumber - 1]);
-        }else if(bombsNumber == -1 && player.lives==1)
+        }else if(bombsNumber == -1 && player.lives>=1)
         {
             tilemap.SetTile(currentPlayerTile + new Vector3Int(0, 0, 0), bomb);
         }
