@@ -15,6 +15,19 @@ public static class SaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
     }
+    public static void SaveOptions(float volume,float effect)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/options.fun";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        OptionData data = new OptionData(volume,effect);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+        Debug.Log("Uzsaugota sekmingai!");
+    }
+   
     public static OptionData LoadOption()
     {
         string path = Application.persistentDataPath + "/options.fun";
@@ -37,4 +50,5 @@ public static class SaveSystem
             return null;
         }
     }
+   
 }

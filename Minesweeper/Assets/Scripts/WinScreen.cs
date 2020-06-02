@@ -40,6 +40,7 @@ public class WinScreen : MonoBehaviour
         timerText.text = "Level beaten in: " + minutes + "minutes " + seconds + "seconds";
         winScreen.SetActive(true);
         //FindObjectOfType<AudioManager>().Play("TF2Victory");
+        
         FindObjectOfType<AudioManager>().Play("GtaWin");
         enabled = false;
         FindObjectOfType<GameOverMeniu>().enabled = false;

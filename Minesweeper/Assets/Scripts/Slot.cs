@@ -17,6 +17,7 @@ public class Slot : MonoBehaviour
         if (transform.childCount <= 0)
         {
             inventory.items[i]= 0;
+            
         }
     }
     public void DropItem()

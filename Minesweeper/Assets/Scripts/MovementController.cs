@@ -37,8 +37,8 @@ public class MovementController : MonoBehaviour, IMovementController
     public bool isDead = false;
     public bool isWon = false;
 
-    
-    
+
+    OptionData data;
 
     bool hasMoved;
     public int vision = 1;
@@ -60,6 +60,10 @@ public class MovementController : MonoBehaviour, IMovementController
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.transform.position = new Vector3(-8, -8.6f, 0);
         player.changePosition(new Vector3(-8, -8.6f, 0));
+        data = SaveSystem.LoadOption();
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "PickupSound");
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "GtaWin");
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "DancingCoffin");
 
         //this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
     }
@@ -101,6 +105,7 @@ public class MovementController : MonoBehaviour, IMovementController
             else if (movementInput.x != 0 && !hasMoved)
             {
                 hasMoved = true;
+                FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "MovingSound");
                 FindObjectOfType<AudioManager>().Play("MovingSound");
                 Debug.Log("Player input detected");
 
@@ -135,6 +140,7 @@ public class MovementController : MonoBehaviour, IMovementController
         this.GetComponent<SpriteRenderer>().sprite = spriteRobo;
         //player.addLive();
         player.isRobot = true;
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "RoboUseSound");
         FindObjectOfType<AudioManager>().Play("RoboUseSound");
         Debug.Log("Robot item used");
     }
@@ -142,6 +148,7 @@ public class MovementController : MonoBehaviour, IMovementController
     public void HealthItemUsed()
     {
         this.GetComponent<SpriteRenderer>().sprite = health;
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "HealthUseSound");
         FindObjectOfType<AudioManager>().Play("HealthUseSound");
         player.addLive();
     }
@@ -149,6 +156,7 @@ public class MovementController : MonoBehaviour, IMovementController
     public void SunItemUsed()
     {
         currentPlayerTile = fogOfWar.WorldToCell(transform.position);
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "SunUseSound");
         FindObjectOfType<AudioManager>().Play("SunUseSound");
         if (currentPlayerTile.y % 2 == 0)
         {
@@ -187,6 +195,7 @@ public class MovementController : MonoBehaviour, IMovementController
     public void FoodItemUsed()
     {
         this.GetComponent<SpriteRenderer>().sprite = food;
+        FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "FoodUseSound");
         FindObjectOfType<AudioManager>().Play("FoodUseSound");
         player.addLive();
     }
@@ -291,6 +300,7 @@ public class MovementController : MonoBehaviour, IMovementController
         //if (bombs.GetTile(currentPlayerTile) != null && !isDead)
         if (bombDetection.HandlePlayerInteractionWithBombs(bombs, currentPlayerTile) && !isDead)
         {
+            FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "MineBlowingSound");
             FindObjectOfType<AudioManager>().Play("MineBlowingSound");
             if (item)
             {
@@ -301,6 +311,7 @@ public class MovementController : MonoBehaviour, IMovementController
                 if (player.isRobot)
                 {
                     player.isRobot = false;
+                    FindObjectOfType<AudioManager>().SetVolume(data.soundEffect, "DestroyRobotSound");
                     FindObjectOfType<AudioManager>().Play("DestroyRobotSound");
                     this.GetComponent<SpriteRenderer>().sprite = spritePlayer;
                 }

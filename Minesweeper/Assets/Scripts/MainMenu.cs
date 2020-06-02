@@ -7,9 +7,16 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
+    public Slider backgroundMusic;
+    public Slider soundEffect;
     public void Start()
     {
         Debug.Log("pradedam");
+        OptionData data = SaveSystem.LoadOption();
+        Debug.Log("Ha");
+        soundEffect.value = data.soundEffect;
+        backgroundMusic.value = data.volume;
+        soundEffect.value = data.soundEffect;
         //FindObjectOfType<AudioManager>().Play("Background_Music");
     }
     public void PlayGame()
@@ -29,7 +36,12 @@ public class MainMenu : MonoBehaviour
         //Debug.Log(volume);
         audioMixer.SetFloat("Volume",volume);
         FindObjectOfType<AudioManager>().SetVolume(volume, "Background_Music");
-        SaveSystem.SaveOptions(volume);
+        SaveSystem.SaveOptions(volume,soundEffect.value);
+    }
+    public void SaveEffectSound(float effect)
+    {
+        soundEffect.value = effect;
+        SaveSystem.SaveOptions(backgroundMusic.value, effect);
     }
 
 }
